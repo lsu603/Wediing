@@ -1,0 +1,130 @@
+#hallInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    font-size: 13px;
+}
+
+#hallInfo h1 {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 50px 0;
+}
+
+.h_info_Tbl {
+    width: 800px;
+    text-align: left;
+}
+.h_info_Tbl tr,
+.h_info_Tbl td {
+    vertical-align: middle;
+    height: 35px;
+    border-bottom: black 1px solid;
+    padding: 0 10px;
+}
+
+.h_info_Tbl .t_1 {
+    width: 120px;
+}
+
+.h_info_Tbl .t_2 {
+    padding-left: 5px;
+    width: 160px;
+}
+
+.h_info_Tbl .day input,
+.h_info_Tbl .people input,
+.h_info_Tbl .time select {
+    width: 45px;
+}
+
+.h_info_Tbl .sh_name input {
+    width: 150px;
+}
+
+.h_info_Tbl .m_name input,
+.h_info_Tbl .w_name input {
+    width: 80px;
+}
+
+#hallInfo td textarea {
+    width: 700px;
+    height: 700px;
+    resize: none;
+    margin: 30px 0;
+}
+
+.h_info_Tbl select {
+    border: rgba(128, 128, 128, 0.15) 1px solid;
+    width: 80px;
+}
+.h_info_Tbl input {
+    padding: 0 6px;
+    border: rgba(128, 128, 128, 0.15) 1px solid;
+}
+#hallInfo tr:last-child {
+    height: 120px;
+    border: none;
+}
+#hallInfo tr:last-child td {
+    border: none;
+}
+
+#hallInfo input[type="button"] {
+    background-color: black;
+    border: none;
+    color: white;
+    width: 50px;
+    font-size: 11px;
+    height: 25px;
+    vertical-align: middle;
+}
+
+.h_info_Memo {
+    margin: 0 20px;
+}
+
+.h_memo_form {
+    display: flex;
+    width: 800px;
+    margin-top: 30px;
+}
+.h_memo_form .day {
+    width: 110px;
+    margin: 0 15px;
+}
+.h_memo_form .memo {
+    width: 550px;
+    margin: 0px 10px;
+    height: auto;
+}
+
+.h_info_btn {
+    margin: 50px 0;
+}
+
+#hallInfo .t_2 .mod_p {
+    width: 70px;
+    font-size: 10px;
+}
+
+.h_info_Tbl .memo_frm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#hallInfo td .text_btn {
+    position: relative;
+    margin-left: 30px;
+}
+#hallInfo .payForm {
+    display: flex;
+    width: 700px;
+    justify-content: space-around;
+}
+#hallInfo .payForm input {
+    margin: 0 10px;
+    width: 150px;
+}

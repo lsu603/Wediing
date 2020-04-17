@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="baseLayout"
+		template="/WEB-INF/views/common/layout.jsp">
+		<put-attribute name="title" value="레이아웃 페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
+		<put-attribute name="bar" value="/WEB-INF/views/common/bar.jsp" />
+		<put-attribute name="body" value="" />
+	</definition>
+
+	<definition name="/member/login" extends="baseLayout">
+		<put-attribute name="title" value="메인 로그인 페이지" />
+		<put-attribute name="body" value="/WEB-INF/views/member/loginForm.jsp" />
+	</definition>
+
+	<definition name="/err" template="/WEB-INF/views/err.jsp"/>
+</tiles-definitions>
+
+

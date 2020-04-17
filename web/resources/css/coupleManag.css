@@ -1,0 +1,55 @@
+#memberManag {
+    text-align: center;
+    font-size: 14px;
+}
+
+.memberTbl {
+    border: black 2px solid;
+    border-collapse: collapse;
+    width: 900px;
+    text-align: center;
+}
+.memberTbl tr,
+.memberTbl td {
+    border-bottom: black 1px solid;
+    border-right: black 1px solid;
+    padding: 0px 0;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.memberTbl .memT_2,
+.memberTbl .memT_3 {
+    line-height: 25px;
+}
+
+.memberTbl .memT_4,
+.memberTbl .memT_5 {
+    width: 50px;
+}
+.memberTbl tr:first-child {
+    height: 55px;
+}
+
+.memberTbl .T_1 {
+    border-bottom: rgba(128, 128, 128, 0.15) 1px solid;
+}
+.memberTbl .T_2 {
+    /* border-top: gray 2px solid; */
+}
+.member_search {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    width: 900px;
+    margin: 20px;
+}
+.member_search input[type="button"] {
+    background-color: black;
+    border: none;
+    color: white;
+    font-size: 11px;
+    height: 25px;
+    width: 50px;
+    vertical-align: middle;
+}

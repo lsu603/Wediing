@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="/admin/listPage" extends="baseLayout">
+	<put-attribute name="title" value="플래너 관리" />
+	<put-attribute name="body" value="/WEB-INF/views/admin/plannerManag.jsp" />
+</definition>
+
+	<definition name="/admin/searchPlanner" template="/WEB-INF/views/admin/searchPlanner.jsp">
+	</definition>
+
+	<definition name="/admin/plannerInfo" extends="baseLayout">
+		<put-attribute name="title" value="플래너 정보" />
+		<put-attribute name="body" value="/WEB-INF/views/admin/plannerInfo.jsp" />
+	</definition>
+
+	<definition name="/admin/modifyInfo" extends="baseLayout">
+		<put-attribute name="title" value="플래너 " />
+		<put-attribute name="body" value="/WEB-INF/views/admin/modifyInfo.jsp" />
+	</definition>
+</tiles-definitions>
+
+

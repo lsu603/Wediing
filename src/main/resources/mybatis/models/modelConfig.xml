@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <settings>
+        <setting name="cacheEnabled" value="false" />
+        <setting name="jdbcTypeForNull" value="NULL" />
+    </settings>
+
+  <typeAliases>
+    <typeAlias type="com.wc.b_member.vo.MemberVO" alias="memberVO" />
+    <typeAlias type="com.wc.b_member.vo.CoupleVO" alias="coupleVO" />
+    <typeAlias type="com.wc.planner.couple.vo.C_memoVO" alias="C_memoVO" />
+    <typeAlias type="com.wc.planner.PlannerVO" alias="plannerVO" />
+    <typeAlias type="com.wc.planner.contract.vo.ContractVO" alias="contractVO" />
+    <typeAlias type="com.wc.planner.contract.vo.HallVO" alias="hallVO" />
+    <typeAlias type="com.wc.planner.contract.vo.ShopVO" alias="shopVO" />
+    <typeAlias type="com.wc.planner.contract.vo.EtVO" alias="etVO" />
+    <typeAlias type="com.wc.board.vo.ArticleVO" alias="articleVO" />
+    <typeAlias type="com.wc.board.vo.ImageVO" alias="imageVO" />
+  </typeAliases>
+
+</configuration>
+
+
+
+

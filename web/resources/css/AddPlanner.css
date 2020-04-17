@@ -1,0 +1,55 @@
+#Planner_Sch {
+    text-align: center;
+    margin: 30px;
+}
+
+.plannerSch {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 250px;
+    margin: 20px 0;
+}
+
+.plannerSch input[type="text"] {
+    border: none;
+    border-bottom: black 1px solid;
+    padding: 5px;
+}
+
+.plannerSch .Sch_btn {
+    background-color: black;
+    border: none;
+    color: white;
+    width: 55px;
+    height: 30px;
+    font-size: 13px;
+    padding-bottom: 3px;
+}
+
+.Sch_result {
+    border-bottom: black 1px solid;
+    border-collapse: collapse;
+    width: 250px;
+    text-align: center;
+    margin: 30px 0;
+}
+
+.Sch_result tr,
+.Sch_result td {
+    border-bottom: black 1px solid;
+    height: 25px;
+    font-size: 13px;
+    padding-top: 5px;
+}
+
+.Sch_result tr:first-child {
+    font-weight: bold;
+}
+
+.Sch_result a:link,
+.Sch_result a:visited,
+.Sch_result a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}

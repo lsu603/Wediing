@@ -1,0 +1,66 @@
+.logins {
+  position: relative;
+  top: 80px;
+  height: 400px;
+  width: 400px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.logins_h1 {
+  font-size: 40px;
+  position: relative;
+  left: -65px;
+  margin-bottom: 20px;
+}
+
+.logins_login {
+  height: 120px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.login_info {
+  border: none;
+  border-bottom: black 1px solid;
+  height: 30px;
+  width: 250px;
+  padding: 0;
+}
+.login_info:focus {
+  outline: none;
+}
+
+.logins_sub {
+  width: 250px;
+  height: 50px;
+  margin-top: 20px;
+  background-color: black;
+  border: none;
+  color: white;
+}
+
+.logins_h1,
+.logins_sub {
+  font-weight: bold;
+}
+
+.logins_sub:focus {
+  outline: none;
+}
+
+a {
+  color: rgb(61, 60, 60);
+  font-size: 12px;
+  margin-top: 25px;
+}
+
+.logins a:link,
+.logins a:visited,
+.logins a:hover {
+  text-decoration: none;
+  color: rgb(61, 60, 60);
+}

@@ -1,0 +1,36 @@
+@import "reset.css";
+@import "login.css";
+@import "memberForm.css";
+@import "layout.css";
+@import "plannerManag.css";
+@import "AddPlanner.css";
+@import "plannerInfo.css";
+@import "coupleManag.css";
+@import "coupleInfo.css";
+@import "contManag.css";
+@import "conHSE.css";
+@import "boardList.css";
+@import "articleForm.css";
+@import "viewArticle.css";
+
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+* input:focus {
+  outline: none;
+}
+
+* a:link,
+* a:visited,
+* a:hover {
+  text-decoration: none;
+}

@@ -1,0 +1,60 @@
+.add_Article {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 50px;
+}
+
+.add_Article h1 {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 40px 0;
+}
+.add_article_tbl {
+    border-collapse: collapse;
+    width: 700px;
+    text-align: center;
+    margin: 30px 0;
+    font-size: 15px;
+}
+.add_article_tbl tr,
+.add_article_tbl td {
+    border-bottom: black 1px solid;
+    height: 35px;
+    font-size: 15px;
+    vertical-align: middle;
+}
+
+.add_Article input[type="button"],
+.add_Article input[type="submit"] {
+    background-color: black;
+    border: none;
+    color: white;
+    width: 50px;
+    font-size: 11px;
+    height: 25px;
+}
+
+.add_article_tbl .t1 {
+    width: 100px;
+}
+.add_article_tbl .t2 {
+    text-align: left;
+}
+.add_article_tbl .title {
+    padding-left: 10px;
+}
+
+.add_article_tbl input[type="text"] {
+    border: none;
+    width: 500px;
+    padding: 0;
+}
+.add_Article td textarea {
+    width: 700px;
+    height: 400px;
+    resize: none;
+    margin: 10px 0;
+}
+.add_article_tbl td .addFile {
+    width: 70px;
+}

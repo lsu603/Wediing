@@ -1,0 +1,59 @@
+.board_list {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.board_list h1 {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 40px 0;
+}
+
+.board_tbl {
+    border: black 2px solid;
+    border-collapse: collapse;
+    width: 800px;
+    text-align: center;
+}
+.board_tbl tr,
+.board_tbl td {
+    border-bottom: black 1px solid;
+    border-right: black 1px solid;
+    padding: 0px 0;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.board_tbl tr:first-child {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+}
+.board_tbl .t1 {
+    width: 40px;
+}
+.board_tbl .t3 {
+    width: 80px;
+}
+.board_tbl .t4 {
+    width: 120px;
+}
+.board_list input[type="button"] {
+    background-color: black;
+    border: none;
+    color: white;
+    width: 50px;
+    font-size: 11px;
+    height: 25px;
+}
+
+.board_list .add {
+    width: 800px;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}

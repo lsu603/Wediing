@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.contract">
+<!-- 리절트 맵 정의 -->
+
+	<resultMap id="coupleResult" type="coupleVO">
+		<result property="c_man" column="c_man" />
+		<result property="c_woman" column="c_woman" />
+		<result property="c_w_tel" column="c_w_tel" />
+		<result property="c_m_tel" column="c_m_tel" />
+
+		<result property="c_mem_num" column="c_mem_num" />
+		<result property="c_planner" column="c_planner" />
+		<result property="c_pro" column="c_pro" />
+		<result property="c_con" column="c_con" />
+		<result property="c_day" column="c_day" />
+		<result property="c_p_name" column="c_p_name"/>
+	</resultMap>
+
+	<resultMap id="contractResult" type="contractVO">
+		<result property="c_mem_num" column="c_mem_num" />
+		<result property="c_hall" column="c_hall" />
+		<result property="c_stu_shop" column="c_stu_shop" />
+		<result property="c_et" column="c_et" />
+		<result property="c_p_id" column="c_p_id"/>
+		<result property="c_p_name" column="c_p_name"/>
+		<result property="c_day" column="c_day"/>
+		<result property="c_man" column="c_man"/>
+		<result property="c_woman" column="c_woman"/>
+	</resultMap>
+
+	<resultMap id="hallResult" type="hallVO">
+		<result property="c_mem_num" column="c_mem_num" />
+		<result property="c_hall_name" column="c_hall_name" />
+		<result property="c_hall_memo" column="c_hall_memo" />
+		<result property="c_floor" column="c_floor" />
+		<result property="c_time" column="c_time"/>
+		<result property="c_person" column="c_person"/>
+		<result property="c_pay" column="c_pay"/>
+		<result property="c_propay" column="c_propay"/>
+	</resultMap>
+	<resultMap id="shopResult" type="shopVO">
+		<result property="c_mem_num" column="c_mem_num" />
+		<result property="c_studio_name" column="c_studio_name" />
+		<result property="c_shop_memo" column="c_shop_memo" />
+		<result property="c_studio_day" column="c_studio_day" />
+		<result property="c_shop_name" column="c_shop_name"/>
+		<result property="c_studio_time" column="c_studio_time"/>
+		<result property="c_pay" column="c_pay"/>
+		<result property="c_propay" column="c_propay"/>
+	</resultMap>
+	<resultMap id="etResult" type="etVO">
+		<result property="c_mem_num" column="c_mem_num" />
+		<result property="c_et_memo" column="c_et_memo" />
+	</resultMap>
+
+
+
+	<select id="selectContNum" resultType="int" >
+    <![CDATA[
+		SELECT count(C_MEM_NUM)
+			  from W_COUPLE_CONTRACT
+				where c_mem_num = #{num}
+		]]>
+  </select>
+
+	<select id="selectCoupleName" parameterType="String" resultMap="coupleResult">
+		select *
+		from W_COUPLE_INFO
+		where c_man=#{name} or c_woman=#{name}
+-- 		검색하는 아이디가 존재하는지 확인
+	</select>
+
+	<insert id="addContract" parameterType="int">
+		    <![CDATA[
+		insert into w_couple_contract (C_MEM_NUM,C_P_ID,C_P_NAME,C_DAY,C_MAN,C_WOMAN)
+		values (#{c_mem_num},#{c_p_id},#{c_p_name},#{c_day},#{c_man},#{c_woman})
+		]]>
+	</insert>
+
+	<select id="aCountContract" resultType="int"   >
+    <![CDATA[
+		SELECT count(C_MEM_NUM)
+		from W_COUPLE_CONTRACT
+		where C_MEM_NUM > 0
+		]]>
+  </select>
+	<select id="pCountContract" resultType="int" parameterType="String">
+    <![CDATA[
+		SELECT count(C_MEM_NUM)
+		from W_COUPLE_CONTRACT
+		where C_MEM_NUM > 0 and C_P_ID = #{id} and C_P_ID is not null
+		]]>
+  </select>
+	<select id="searchCountCon" resultType="int" parameterType="String">
+    <![CDATA[
+		SELECT count(C_MEM_NUM)
+		from W_COUPLE_CONTRACT
+		where c_p_name=#{name}
+		]]>
+  </select>
+	<select id="searchCon" resultType="int" parameterType="String">
+    <![CDATA[
+		SELECT count(C_MEM_NUM)
+		from W_COUPLE_CONTRACT
+		where c_man=#{name} or C_WOMAN=#{name}
+		]]>
+  </select>
+	<select id="aConCriteria" resultMap="contractResult"   >
+    <![CDATA[
+		SELECT *
+		FROM (
+				 SELECT ROWNUM RN, A.*
+				 FROM (
+						  SELECT *
+						  FROM W_COUPLE_CONTRACT
+						  ORDER BY c_mem_num DESC
+					  ) A
+			 )
+		WHERE RN BETWEEN #{start} AND #{end}
+		]]>
+  </select>
+	<select id="pConCriteria" resultMap="contractResult" >
+    <![CDATA[
+		SELECT *
+		FROM (
+				 SELECT ROWNUM RN, A.*
+				 FROM (
+						  SELECT *
+						  FROM W_COUPLE_CONTRACT
+						  where c_p_id = #{id_name}
+						  ORDER BY c_mem_num DESC
+					  ) A
+			 )
+		WHERE RN BETWEEN #{start} AND #{end}
+		]]>
+  </select>
+	<select id="searchConCriteria" resultMap="contractResult"   >
+    <![CDATA[
+		SELECT *
+		FROM (
+				 SELECT ROWNUM RN, A.*
+				 FROM (
+						  SELECT *
+						  FROM W_COUPLE_CONTRACT
+						  where c_p_name=#{id_name}
+						  ORDER BY c_mem_num DESC
+					  ) A
+			 )
+		WHERE RN BETWEEN #{start} AND #{end}
+		]]>
+  </select>
+	<select id="searchCriteria" resultMap="contractResult"   >
+    <![CDATA[
+		SELECT *
+		FROM (
+				 SELECT ROWNUM RN, A.*
+				 FROM (
+						  SELECT *
+						  FROM W_COUPLE_CONTRACT
+						  where c_man=#{id_name} or C_WOMAN=#{id_name}
+						  ORDER BY c_mem_num DESC
+					  ) A
+			 )
+		WHERE RN BETWEEN #{start} AND #{end}
+		]]>
+  </select>
+
+
+	<update id="updateCouplePlanner"  parameterType="coupleVO">
+		update w_couple_info
+		set C_P_NAME=#{c_p_name},C_PLAnNER=#{c_planner}
+		where C_MEM_NUM=#{c_mem_num}
+	</update>
+
+	<update id="updateCouple"  parameterType="coupleVO">
+		update w_couple_info
+		set c_man = #{c_man},
+		    c_woman = #{c_woman},
+		    c_m_tel = #{c_m_tel},
+		    c_w_tel = #{c_w_tel},
+		    c_pro = #{c_pro},
+		    c_day = #{c_day}
+		where C_MEM_NUM=#{c_mem_num}
+	</update>
+
+<!--	<delete id="deletePlanner"  parameterType="String">-->
+<!--	<![CDATA[-->
+<!--		delete from W_PLANNER-->
+<!--		where-->
+<!--			p_id=#{id}-->
+<!--		]]>-->
+<!--  </delete>-->
+
+	<select id="selectHall"  resultMap="hallResult">
+		select *
+		from W_COUPLE_HALL_DETAIL
+		where C_MEM_NUM=#{num}
+	</select>
+	<select id="selectShop"  resultMap="shopResult">
+		select *
+		from W_COUPLE_SHOP_DETAIL
+		where C_MEM_NUM=#{num}
+	</select>
+	<select id="selectEt"  resultMap="etResult">
+		select *
+		from W_COUPLE_ET_DETAIL
+		where C_MEM_NUM=#{num}
+	</select>
+	<select id="selectCont"  resultMap="contractResult">
+		select *
+		from w_couple_contract
+		where C_MEM_NUM=#{num}
+	</select>
+
+	<insert id="addHall" parameterType="int">
+		    <![CDATA[
+		insert into W_COUPLE_HALL_DETAIL (C_MEM_NUM)
+		values (#{num})
+		]]>
+	</insert>
+	<insert id="addShop" parameterType="int">
+		    <![CDATA[
+		insert into W_COUPLE_SHOP_DETAIL (C_MEM_NUM)
+		values (#{num})
+		]]>
+	</insert>
+	<insert id="addEt" parameterType="int">
+		    <![CDATA[
+		insert into W_COUPLE_ET_DETAIL (C_MEM_NUM)
+		values (#{num})
+		]]>
+	</insert>
+
+	<update id="updateContHall"  parameterType="contractVO">
+		update w_couple_contract
+		set C_hall=#{c_hall}
+		where C_MEM_NUM=#{c_mem_num}
+	</update>
+	<update id="updateHall"  parameterType="hallVO">
+		update W_COUPLE_HALL_DETAIL
+		set C_HALL_NAME=#{c_hall_name},
+		    C_HALL_MEMO=#{c_hall_memo},
+		    c_floor=#{c_floor},
+		    C_TIME=#{c_time},
+		    C_PERSON=#{c_person},
+		    c_pay=#{c_pay},
+		    c_propay=#{c_propay}
+		where C_MEM_NUM=#{c_mem_num}
+	</update>
+
+	<update id="updateContShop"  parameterType="contractVO">
+		update w_couple_contract
+		set c_stu_shop=#{c_stu_shop}
+		where C_MEM_NUM=#{c_mem_num}
+	</update>
+	<update id="updateShop"  parameterType="shopVO">
+		update W_COUPLE_SHOP_DETAIL
+		set c_studio_name=#{c_studio_name},
+			c_shop_memo=#{c_shop_memo},
+			c_studio_day=#{c_studio_day},
+			c_shop_name=#{c_shop_name},
+			c_studio_time=#{c_studio_time},
+			c_pay=#{c_pay},
+			c_propay=#{c_propay}
+		where C_MEM_NUM=#{c_mem_num}
+	</update>
+
+	<update id="updateContEt"  parameterType="contractVO">
+		update w_couple_contract
+		set C_ET=#{c_et}
+		where C_MEM_NUM=#{c_mem_num}
+	</update>
+	<update id="updateEt"  parameterType="EtVO">
+		update W_COUPLE_ET_DETAIL
+		set c_et_memo=#{c_et_memo}
+		where C_MEM_NUM=#{c_mem_num}
+	</update>
+</mapper>

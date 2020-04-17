@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.board">
+	<!--    글 정보를 저장할 Map-->
+	<resultMap id="articlesResult" type="articleVO">
+		<result property="articleNO" column="articleNO" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="writeDate" column="writeDate" />
+		<result property="imageFileName" column="imageFileName" />
+		<result property="name" column="name" />
+		<result property="id" column="id" />
+	</resultMap>
+
+	<!--    이미지파일 테이블에서 조회한 레코드를 저장하는 resultMap설정-->
+	<resultMap id="imgResult" type="imageVO">
+		<result property="imageFileNO" column="imageFileNO" />
+		<result property="articleNO" column="articleNO" />
+		<result property="imageFileName" column="imageFileName" />
+	</resultMap>
+
+	<select id="articleCriteria" resultMap="articlesResult"   >
+    <![CDATA[
+		SELECT *
+		FROM (
+				 SELECT ROWNUM RN, A.*
+				 FROM (
+						  SELECT articleNO,title,CONTENT,IMAGEFILENAME,name,id,to_char(WRITEDATE,'yyyy-mm-dd') as writeDate
+						  FROM W_BOARD
+						  ORDER BY ARTICLENO DESC
+					  ) A
+			 )
+		WHERE RN BETWEEN #{start} AND #{end}
+		]]>
+  </select>
+	<select id="CountArticle" resultType="int"   >
+    <![CDATA[
+		SELECT count(articleNO)
+		from w_Board
+		where articleNO > 0
+		]]>
+  </select>
+
+	<!--    모든 글 조회-->
+	<select id="selectAllArticlesList" resultMap="articlesResult"   >
+    <![CDATA[
+		SELECT articleNO, title, content, writeDate, imageFileName,name
+		from w_board
+		ORDER SIBLINGS BY articleNO DESC
+		]]>
+  </select>
+
+
+<!--	    <insert id="insertNewArticle"  parameterType="java.util.Map">-->
+<!--	&#45;&#45;         새 글 추가기능, 글정보를 Map으로 전달-->
+<!--			<![CDATA[-->
+<!--	        INSERT into w_board(title, content, imageFileName, id,name,WRITEDATE)-->
+<!--	        VALUES(#{title},#{content},#{imageFileName},#{id},#{name},sysdate)-->
+<!--	        ]]>-->
+<!--		</insert>-->
+
+	<select id="selectNewArticleNO" resultType="int"  >
+		--         새 글에 대한 글번호를 가져옴
+		<![CDATA[
+		SELECT  max(articleNO) from w_board
+		]]>
+	</select>
+
+	<select id="selectArticle" resultType="articleVO"   parameterType="int">
+    <![CDATA[
+		SELECT * from w_board
+		where articleNO = #{articleNO}
+		]]>
+  </select>
+
+	<update id="updateArticle"  parameterType="java.util.Map">
+		update w_board
+		set title=#{title},
+		content=#{content}
+		where articleNO=#{articleNO}
+	</update>
+	<update id="insertImage"  parameterType="java.util.Map">
+		update w_ImageFile
+		set imagefilename=#{imageFileName},IMAGEFILENO=#{imageFileNO}
+		where articleNO=#{articleNO}
+	</update>
+	<delete id="deleteImage"  parameterType="int">
+    <![CDATA[
+		delete from w_ImageFile
+		where articleNO=#{no}
+		]]>
+  </delete>
+	<select id="countImage" resultType="int">
+    <![CDATA[
+		select count(IMAGEFILENO)
+		from w_ImageFile
+		where articleNO=#{articleNO}
+		]]>
+  </select>
+
+
+	<delete id="deleteArticle"  parameterType="int">
+    <![CDATA[
+		delete from w_board
+		where articleNO in (
+			SELECT articleNO FROM  t_board
+			START WITH articleNO = #{articleNO}
+			CONNECT BY PRIOR  articleNO = parentNO )
+		]]>
+  </delete>
+
+	<!--다중 이미지 추가 SQL문 -->
+
+	<insert id="insertNewArticle"  parameterType="java.util.Map">
+      <![CDATA[
+		insert into w_board(name, id, title, content, WRITEDATE)
+		values(#{name}, #{id}, #{title}, #{content},sysdate)
+--         imageFileName은 더이상 쓰지않으므로 null
+		]]>
+    </insert>
+
+	<insert id="insertNewImage"  parameterType="java.util.List">
+		<foreach item="item"  collection="list"   open="INSERT ALL"
+				 separator=" " close="SELECT * FROM DUAL" >
+			INTO w_imageFile( imageFileName, articleNO, writedate)
+			VALUES ( #{item.imageFileName}, #{item.articleNO}, sysdate)
+		</foreach>
+	</insert>
+
+
+	<select id="selectNewImageFileNO" resultType="int"  >
+    <![CDATA[
+		SELECT  nvl(max(imageFileNO),0) from w_imageFile
+--         새로 추가할 이미지정보의 이미지 번호검색
+		]]>
+  </select>
+
+
+	<select  id="selectImageFileList" resultType="imageVO" parameterType="int">
+    <![CDATA[
+		SELECT * from w_imageFile
+		where articleNO=#{articleNO}
+--         글번호로 이미지파일 정보 조회
+		]]>
+  </select>
+</mapper>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.planner">
+<!-- 리절트 맵 정의 -->
+	<resultMap id="plannerResult" type="plannerVO">
+		<result property="p_num" column="p_num" />
+		<result property="p_id" column="p_id" />
+		<result property="p_name" column="p_name" />
+		<result property="p_memo" column="p_memo" />
+
+	</resultMap>
+	<resultMap id="coupleResult" type="coupleVO">
+		<result property="c_man" column="c_man" />
+		<result property="c_woman" column="c_woman" />
+		<result property="c_w_tel" column="c_w_tel" />
+		<result property="c_m_tel" column="c_m_tel" />
+
+		<result property="c_mem_num" column="c_mem_num" />
+		<result property="c_planner" column="c_planner" />
+		<result property="c_pro" column="c_pro" />
+		<result property="c_con" column="c_con" />
+		<result property="c_day" column="c_day" />
+		<result property="c_p_name" column="c_p_name"/>
+	</resultMap>
+
+	<resultMap id="coupleMemoResult" type="C_memoVO">
+		<result property="c_mem_num" column="c_mem_num" />
+		<result property="c_memo" column="c_memo" />
+		<result property="c_memo_num" column="c_memo_num" />
+		<result property="c_date" column="c_date" />
+
+	</resultMap>
+
+
+	<select id="selectPlannerName" resultType="String" >
+    <![CDATA[
+		SELECT p_name
+			  from w_planner
+		]]>
+  </select>
+
+	<select id="searchPlannerName" resultType="plannerVO" parameterType="String">
+    <![CDATA[
+		select *
+		from w_planner
+		where P_NAME = #{name}
+		]]>
+  </select>
+	<select id="searchPlannerId" resultType="plannerVO" parameterType="String" >
+    <![CDATA[
+		select *
+		from w_planner
+		where P_id = #{id}
+		]]>
+  </select>
+
+	<select id="aMemCriteria" resultMap="coupleResult"   >
+    <![CDATA[
+		SELECT *
+		FROM (
+				 SELECT ROWNUM RN, A.*
+				 FROM (
+						  SELECT *
+						  FROM W_COUPLE_INFO
+						  ORDER BY c_mem_num DESC
+					  ) A
+			 )
+		WHERE RN BETWEEN #{start} AND #{end}
+		]]>
+  </select>
+	<select id="pMemCriteria" resultMap="coupleResult" >
+    <![CDATA[
+		SELECT *
+		FROM (
+				 SELECT ROWNUM RN, A.*
+				 FROM (
+						  SELECT *
+						  FROM W_COUPLE_INFO
+						  where C_PLAnNER = #{id_name}
+						  ORDER BY c_mem_num DESC
+					  ) A
+			 )
+		WHERE RN BETWEEN #{start} AND #{end}
+		]]>
+  </select>
+	<select id="searchMemCriteria" resultMap="coupleResult"   >
+    <![CDATA[
+		SELECT *
+		FROM (
+				 SELECT ROWNUM RN, A.*
+				 FROM (
+						  SELECT *
+						  FROM W_COUPLE_INFO
+						  where c_man=#{id_name} or c_woman=#{id_name}
+						  ORDER BY c_mem_num DESC
+					  ) A
+			 )
+		WHERE RN BETWEEN #{start} AND #{end}
+		]]>
+  </select>
+	<select id="selectCoupleName" parameterType="String" resultMap="coupleResult">
+	   select *
+	   from W_COUPLE_INFO
+	   where c_man=#{name} or c_woman=#{name}
+-- 		검색하는 아이디가 존재하는지 확인
+	</select>
+
+
+	<select id="aCountCouples" resultType="int"   >
+    <![CDATA[
+		SELECT count(C_MEM_NUM)
+		from W_COUPLE_INFO
+		where C_MEM_NUM > 0
+		]]>
+  </select>
+	<select id="pCountCouples" resultType="int" parameterType="String">
+    <![CDATA[
+		SELECT count(C_MEM_NUM)
+		from W_COUPLE_INFO
+		where C_MEM_NUM > 0 and C_PLAnNER = #{id_name} and C_PLAnNER is not null
+		]]>
+  </select>
+	<select id="searchCountCouples" resultType="int" parameterType="String">
+    <![CDATA[
+		SELECT count(C_MEM_NUM)
+		from W_COUPLE_INFO
+		where c_man=#{id_name} or c_woman=#{id_name}
+		]]>
+  </select>
+
+	<select id="coupleInfo" resultType="coupleVO"   >
+    <![CDATA[
+	SELECT *
+	from W_COUPLE_INFO
+	where C_MEM_NUM = #{num}
+	]]>
+  </select>
+	<select id="selectC_Memo" resultType="C_memoVO"   >
+    <![CDATA[
+		SELECT *
+		from w_couple_info_memo
+		where C_MEM_NUM = #{num}
+		]]>
+  </select>
+	<insert id="addC_Memo" parameterType="C_memoVO">
+		    <![CDATA[
+		insert into w_couple_info_memo (C_MEM_NUM, C_MEMO, C_DATE)
+		values (#{c_mem_num}, #{c_memo}, sysdate)
+		]]>
+	</insert>
+
+	<update id="updateCouplePlanner"  parameterType="coupleVO">
+		update w_couple_info
+		set C_P_NAME=#{c_p_name},C_PLAnNER=#{c_planner}
+		where C_MEM_NUM=#{c_mem_num}
+	</update>
+
+	<update id="updateCouple"  parameterType="coupleVO">
+		update w_couple_info
+		set c_man = #{c_man},
+		    c_woman = #{c_woman},
+		    c_m_tel = #{c_m_tel},
+		    c_w_tel = #{c_w_tel},
+		    c_pro = #{c_pro},
+		    c_day = #{c_day}
+		where C_MEM_NUM=#{c_mem_num}
+	</update>
+
+<!--	<delete id="deletePlanner"  parameterType="String">-->
+<!--	<![CDATA[-->
+<!--		delete from W_PLANNER-->
+<!--		where-->
+<!--			p_id=#{id}-->
+<!--		]]>-->
+<!--  </delete>-->
+
+</mapper>

@@ -1,0 +1,86 @@
+#Cont_Manag {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cont_input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 500px;
+    height: 80px;
+}
+
+.cont_tbl tr,
+.cont_tbl td {
+    border-bottom: black 1px solid;
+    border-right: black 1px solid;
+    padding: 0px 0;
+    height: 35px;
+    vertical-align: middle;
+}
+.cont_tbl {
+    border: black 2px solid;
+    border-collapse: collapse;
+    width: 800px;
+    text-align: center;
+    font-size: 13px;
+}
+.cont_input input[type="button"] {
+    background-color: black;
+    border: none;
+    color: white;
+    font-size: 11px;
+    height: 25px;
+    vertical-align: middle;
+}
+
+.cont_input .cont_add {
+    width: 60px;
+}
+
+.cont_input .cont_input_search {
+    display: flex;
+}
+
+.cont_input .cont_input_search input[type="text"] {
+    width: 80px;
+    padding: 0 5px;
+    font-size: 11px;
+}
+.cont_input .cont_input_search input[type="button"],
+.cont_p_search input[type="button"] {
+    width: 40px;
+}
+
+.cont_tbl tr:first-child {
+    height: 50px;
+    font-weight: bold;
+}
+
+.cont_tbl .tbl_1 {
+    width: 100px;
+}
+.cont_tbl .tbl_2 {
+    width: 200px;
+    font-weight: bold;
+}
+
+.cont_tbl a {
+    font-size: 13px;
+}
+
+.cont_tbl .reg {
+    background-color: #ffff80;
+}
+.cont_tbl .prov {
+    background-color: #80bfff;
+}
+.cont_tbl .cancel {
+    color: #ff8080;
+}
+.cont_p_search {
+    display: flex;
+}

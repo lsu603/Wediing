@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.adminPlanner">
+<!--<mapper namespace="com.wc.common.mapper.B_member">-->
+<!-- 리절트 맵 정의 -->
+	<resultMap id="plannerResult" type="plannerVO">
+		<result property="p_num" column="p_num" />
+		<result property="p_id" column="p_id" />
+		<result property="p_name" column="p_name" />
+		<result property="p_memo" column="p_memo" />
+
+	</resultMap>
+	<resultMap id="memberResult" type="MemberVO">
+		<result property="b_id" column="b_id" />
+		<result property="b_pwd" column="b_pwd" />
+		<result property="b_name" column="b_name" />
+		<result property="b_gender" column="b_gender" />
+
+		<result property="b_tel" column="b_tel" />
+		<result property="b_hall" column="b_hall" />
+		<result property="b_shop" column="b_shop" />
+		<result property="b_et" column="b_et" />
+		<result property="b_rank" column="b_rank" />
+		<result property="b_date" column="b_date" />
+	</resultMap>
+
+	<select id="selectAllPlannerList" resultMap="plannerResult"   >
+    <![CDATA[
+		SELECT *
+			  from W_PLANNER
+			  order by P_NAME desc
+		]]>
+  </select>
+
+	<select id="listCriteria" resultMap="plannerResult"   >
+    <![CDATA[
+		SELECT *
+		FROM (
+				 SELECT ROWNUM RN, A.*
+				 FROM (
+						  SELECT *
+						  FROM W_PLANNER
+						  ORDER BY P_Num DESC
+					  ) A
+			 )
+		WHERE RN BETWEEN #{start} AND #{end}
+		]]>
+  </select>
+	
+	<select id="selectMemberID" parameterType="String" resultType="memberVO">
+	   select *
+	   from W_BASIC_MEMBER
+	   where b_id = #{b_id}
+-- 		검색하는 아이디가 존재하는지 확인
+	</select>
+
+	<select id="selectPlannerID" parameterType="String" resultType="int">
+		select count(*)
+		from W_PLANNER
+		where p_id = #{p_id}
+-- 		검색하는 아이디가 존재하는지 확인
+	</select>
+	
+  <insert id="insertNewPlanner"  parameterType="memberVO">
+  <![CDATA[
+    	insert into W_PLANNER(P_ID,P_NAME)
+							 values(#{b_id},#{b_name})
+--                          플래너 추가
+                                      
+   ]]>      
+  </insert>
+
+	<select id="countPlanners" resultType="int"   >
+    <![CDATA[
+		SELECT count(P_NUM)
+		from W_PLANNER
+		where p_num > 0
+		]]>
+  </select>
+
+	<select id="plannerInfo" resultMap="plannerResult"   >
+    <![CDATA[
+	SELECT *
+	from W_PLANNER
+	where p_id = #{id}
+	]]>
+  </select>
+
+
+	<update id="updatePlanner"  parameterType="java.util.Map">
+		update W_PLANNER
+		set P_memo=#{memo}
+		where p_id=#{id}
+	</update>
+	<update id="updateMember"  parameterType="java.util.Map">
+		update W_basic_member
+		set b_tel=#{tel}
+		where b_id=#{id}
+	</update>
+
+	<delete id="deletePlanner"  parameterType="String">
+	<![CDATA[
+		delete from W_PLANNER
+		where
+			p_id=#{id}
+		]]>
+  </delete>
+
+</mapper>

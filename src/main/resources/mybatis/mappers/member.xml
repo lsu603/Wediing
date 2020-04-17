@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.member">
+<!--<mapper namespace="com.wc.common.mapper.B_member">-->
+<!-- 리절트 맵 정의 -->
+	<resultMap id="memberResult" type="MemberVO">
+	<result property="b_id" column="b_id" />
+	<result property="b_pwd" column="b_pwd" />
+	<result property="b_name" column="b_name" />
+	<result property="b_gender" column="b_gender" />
+
+	<result property="b_tel" column="b_tel" />
+	<result property="b_hall" column="b_hall" />
+	<result property="b_shop" column="b_shop" />
+	<result property="b_et" column="b_et" />
+	<result property="b_rank" column="b_rank" />
+	<result property="b_date" column="b_date" />
+
+</resultMap>
+	<resultMap id="coupleResult" type="coupleVO">
+		<result property="c_man" column="c_man" />
+		<result property="c_woman" column="c_woman" />
+		<result property="c_w_tel" column="c_w_tel" />
+		<result property="c_m_tel" column="c_m_tel" />
+
+		<result property="c_mem_num" column="c_mem_num" />
+		<result property="c_planner" column="c_planner" />
+		<result property="c_pro" column="c_pro" />
+		<result property="c_con" column="c_con" />
+		<result property="c_day" column="c_day" />
+
+	</resultMap>
+
+	<select id="login" resultType="memberVO"  parameterType="java.util.Map"  >
+	    <![CDATA[
+			select * from W_BASIC_MEMBER
+			 where b_id=#{b_id}
+			 and b_pw=#{b_pwd}
+-- 			 id와 pw 일치여부 확인
+		]]>
+	</select>
+	
+	<select id="selectOverlappedID" parameterType="String" resultType="String">
+	   select decode(count(*),1, 'true', 0, 'false')
+	   from W_BASIC_MEMBER
+	   where b_id = #{b_id}
+-- 		id중복검사, 존재하면 true
+	</select>
+	
+  <insert id="insertNewMember"  parameterType="memberVO">
+  <![CDATA[
+    	insert into W_BASIC_MEMBER(B_ID,B_PW,B_NAME,B_GENDER,B_TEL,B_HALL,B_SHOP,B_ET)
+							 values(#{b_id},#{b_pwd},#{b_name},#{b_gender},#{b_tel},#{b_hall},#{b_shop},#{b_et})
+--                             회원정보 추가
+                                      
+   ]]>      
+  </insert>
+
+	<insert id="insertNewCouple"  parameterType="coupleVO">
+  <![CDATA[
+		insert into W_COUPLE_INFO (c_man, c_woman, c_w_tel, c_m_tel, c_con)
+		values(#{c_man},#{c_woman},#{c_w_tel},#{c_m_tel},#{c_con})
+--                             회원정보 추가
+
+		]]>
+  </insert>
+
+	<select id="selectPlannerID" parameterType="String" resultType="String"    >
+	    <![CDATA[
+		select decode(count(*),1, 'true', 0, 'false') from W_PLANNER
+		where p_id = (select b_id from w_basic_member where b_id = #{id})
+-- 			 id와 pw 일치여부 확인
+		]]>
+	</select>
+</mapper>
